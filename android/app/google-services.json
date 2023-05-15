@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "826421091859",
+    "project_id": "gomaker-9139c",
+    "storage_bucket": "gomaker-9139c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826421091859:android:6dc42c23d32908b00be9e6",
+        "android_client_info": {
+          "package_name": "com.example.go_maker_designing_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "826421091859-rdtbqcnpi11clvln63c9hn9hbpvnchhr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.go_maker_designing_app",
+            "certificate_hash": "cad2ecabd8dfa65fe0775e8a3f4356fa6bfed57c"
+          }
+        },
+        {
+          "client_id": "826421091859-vo04c7ql4lifadnnebqepnk1sd016pvi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7eh_9uZFweU-lNOrCUWTDjcM7XWhR6qg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "826421091859-vo04c7ql4lifadnnebqepnk1sd016pvi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
