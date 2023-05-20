@@ -51,6 +51,14 @@ class _CardThirteenState extends State<CardThirteen> {
                   ),
                 ),
                 Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    child: Image.asset('assets/images/person.png', fit: BoxFit.contain, height: 60,
+                      width: 60,),
+                    margin: EdgeInsets.only(top: 30, right: 5),
+                  ),
+                ),
+                Align(
                   alignment: Alignment.topLeft,
                   child: Container(
                     height: SizeConfig.screenWidth * .35,

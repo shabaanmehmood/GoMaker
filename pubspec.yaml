@@ -60,6 +60,7 @@ dependencies:
   url_launcher: ^6.0.20
   flutter_web_browser: ^0.17.0
   animated_text_kit: ^4.2.2
+  barcode_widget: ^2.0.3
 
 dependency_overrides:
   firebase_core_platform_interface: 4.4.1
@@ -92,6 +93,7 @@ flutter:
      - assets/images/qr_image.png
      - assets/images/qrcode.png
      - assets/images/qrcode_black.png
+     - assets/images/person.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

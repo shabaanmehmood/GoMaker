@@ -63,6 +63,14 @@ class _CardFourteenState extends State<CardFourteen> {
                           bottomRight: Radius.circular(30)
                       )
                     ),
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        child: Image.asset('assets/images/person.png', fit: BoxFit.contain, height: 60,
+                          width: 60,),
+                        margin: EdgeInsets.only(top: 10, right: 5),
+                      ),
+                    ),
                   ),
                 ),
                 Align(

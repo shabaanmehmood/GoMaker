@@ -108,6 +108,14 @@ class _CardFourState extends State<CardFour> {
                     ),
                   ),
                 ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    child: Image.asset('assets/images/person.png', fit: BoxFit.contain, height: 60,
+                      width: 60,),
+                    margin: EdgeInsets.only(top: 10, right: SizeConfig.screenWidth * .32),
+                  ),
+                ),
                 Center(
                   child: Container(
                     height: SizeConfig.screenHeight * .12,

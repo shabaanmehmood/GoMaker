@@ -58,6 +58,14 @@ class _CardSeventeenState extends State<CardSeventeen> {
                       fit: BoxFit.contain,),
                   ),
                 ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    child: Image.asset('assets/images/person.png', fit: BoxFit.contain, height: 60,
+                      width: 60,),
+                    margin: EdgeInsets.only(top: 130, right: 5),
+                  ),
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

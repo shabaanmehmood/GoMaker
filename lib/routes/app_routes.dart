@@ -11,6 +11,7 @@ abstract class Routes {
   static const SLIDER_SCREEN = _Paths.SLIDER_SCREEN;
   static const LOGIN_SCREEN = _Paths.LOGIN_SCREEN;
   static const REGISTER_CUSTOMER_SCREEN = _Paths.REGISTER_CUSTOMER_SCREEN;
+  static const BUSINESS_MAIN_PAGE = _Paths.BUSINESS_MAIN_PAGE;
   static const CARD_ONE = _Paths.CARD_ONE;
   static const CARD_TWO = _Paths.CARD_TWO;
   static const CARD_THREE = _Paths.CARD_THREE;
@@ -52,6 +53,7 @@ abstract class _Paths {
   static const SELECTION_SCREEN = '/selection-screen';
   static const LOGIN_SCREEN = '/login-screen';
   static const REGISTER_CUSTOMER_SCREEN = '/register-customer';
+  static const BUSINESS_MAIN_PAGE = '/business-main-page';
   static const CARD_ONE = '/card-one';
   static const CARD_TWO = '/card-two';
   static const CARD_THREE = '/card-three';

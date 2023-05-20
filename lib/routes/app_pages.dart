@@ -13,6 +13,7 @@ import 'package:go_maker_designing_app/ui/cards/two_colors/card_sixteen.dart';
 import 'package:go_maker_designing_app/ui/cards/two_colors/card_ten.dart';
 import 'package:go_maker_designing_app/ui/cards/two_colors/card_thirteen.dart';
 import 'package:go_maker_designing_app/ui/cards/two_colors/card_twelve.dart';
+import 'package:go_maker_designing_app/ui/screens/business/business_main_page.dart';
 import 'package:go_maker_designing_app/ui/screens/register_customer.dart';
 
 import '../ui/cards/two_colors/card_five.dart';
@@ -47,6 +48,11 @@ class AppPages {
     GetPage(
       name: _Paths.REGISTER_CUSTOMER_SCREEN,
       page: () => RegisterCustomer(),
+      // binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.BUSINESS_MAIN_PAGE,
+      page: () => BusinessMainPage(),
       // binding: LoginBinding(),
     ),
     GetPage(

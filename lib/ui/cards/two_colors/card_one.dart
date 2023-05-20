@@ -1,9 +1,12 @@
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_maker_designing_app/global/colors.dart';
+import 'package:go_maker_designing_app/global/global_variables.dart';
 import 'package:go_maker_designing_app/global/global_widgets.dart';
 import 'package:go_maker_designing_app/global/size_config.dart';
 import 'package:go_maker_designing_app/routes/app_pages.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CardOne extends StatefulWidget {
   const CardOne({Key? key}) : super(key: key);
@@ -14,6 +17,13 @@ class CardOne extends StatefulWidget {
 
 class _CardOneState extends State<CardOne> {
   GlobalWidgets globalWidgets = GlobalWidgets();
+  String name = '';
+  String profession = '';
+  String email = '';
+  String contact_number = '';
+  String address = '';
+  String owner_name = '';
+  String id = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,14 +53,31 @@ class _CardOneState extends State<CardOne> {
                           child: Column(
                             children: [
                               Container(
-                                height: 130,
-                                width: 130,
-                                child: Image.asset('assets/images/qr_image.png',
-                                fit: BoxFit.contain,),
+                                  child: Image.asset('assets/images/person.png', fit: BoxFit.contain, height: 60,
+                                    width: 60,),
+                                margin: EdgeInsets.only(top: 10),
+                              ),
+                              // Container(
+                              //   height: 130,
+                              //   width: 130,
+                              //   child: Image.asset('assets/images/qr_image.png',
+                              //   fit: BoxFit.contain,),
+                              // ),
+                              Container(
+                                margin: EdgeInsets.only(top: 10),
+                                child: BarcodeWidget(
+                                  barcode: Barcode.qrCode(
+                                    errorCorrectLevel: BarcodeQRCorrectionLevel.high,
+                                  ),
+                                  data: GlobalVariables.BUSINESS_ID == ''? 'https://google.com' : "${GlobalVariables.BUSINESS_ID}",
+                                  width: 100,
+                                  height: 100,
+                                ),
                               ),
                               globalWidgets.myTextRaleway(context,
-                                  'lorem ipsum ist nicht', ColorsX.light_orange,
-                                  0, 0, 0, 0, FontWeight.w600, 13),
+                                  name == ''?'lorem ipsum ist nicht' : name, ColorsX.light_orange,
+                                  10, 0, 0, 0, FontWeight.w600, 13),
+
                             ],
                           ),
                         ),
@@ -72,7 +99,7 @@ class _CardOneState extends State<CardOne> {
                                     constraints: const BoxConstraints(
                                         minHeight: 5, minWidth: 50, maxHeight: 80, maxWidth: 150),
                                     child: globalWidgets.myTextRaleway(context,
-                                        'lorem.ipsum@gmail.com', ColorsX.white,
+                                        email == ''? 'lorem.ipsum@gmail.com' : email, ColorsX.white,
                                         0, 0, 0, 0, FontWeight.w400, 13),
                                   ),
                                 ],
@@ -84,7 +111,7 @@ class _CardOneState extends State<CardOne> {
                                 children: [
                                   Icon(Icons.phone, color: ColorsX.white,),
                                   globalWidgets.myTextRaleway(context,
-                                      '015773705450', ColorsX.white,
+                                      contact_number == ''?'015773705450':contact_number, ColorsX.white,
                                       0, 0, 0, 0, FontWeight.w400, 13),
                                 ],
                               ),
@@ -101,7 +128,7 @@ class _CardOneState extends State<CardOne> {
                                     constraints: const BoxConstraints(
                                         minHeight: 5, minWidth: 50, maxHeight: 80, maxWidth: 150),
                                     child: globalWidgets.myTextRaleway(context,
-                                        'Your address here. Your address here', ColorsX.white,
+                                        address == ''?'Your address here. Your address here':address, ColorsX.white,
                                         0, 0, 0, 0, FontWeight.w400, 13),
                                   ),
                                 ],
@@ -127,12 +154,12 @@ class _CardOneState extends State<CardOne> {
                     children: [
                       Align(
                         alignment: Alignment.topCenter,
-                        child: globalWidgets.myTextRaleway(context, 'Lorem Ipsum', ColorsX.white,
+                        child: globalWidgets.myTextRaleway(context, owner_name==''?'Lorem Ipsum':owner_name, ColorsX.white,
                             0, 0, 0, 0, FontWeight.w700, 17),
                       ),
                       Align(
                         alignment: Alignment.topCenter,
-                        child: globalWidgets.myTextRaleway(context, 'Software Engineer', ColorsX.white,
+                        child: globalWidgets.myTextRaleway(context, profession == ''?'Software Engineer':profession, ColorsX.white,
                             10, 0, 0, 0, FontWeight.w700, 14),
                       ),
                     ],
@@ -144,6 +171,14 @@ class _CardOneState extends State<CardOne> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 nextButton(context),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                saveButton(context),
+                customizeButton(context),
+                editButton(context),
               ],
             ),
           ],
@@ -166,6 +201,73 @@ class _CardOneState extends State<CardOne> {
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
           child: globalWidgets.myText(context, 'Next', ColorsX.black,
+              0, 0, 0, 0, FontWeight.w700, 18),
+        ),
+      ),
+    );
+  }
+  saveButton(BuildContext context){
+    return GestureDetector(
+      onTap: (){
+        Get.toNamed(Routes.CARD_TWO);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 10,top: 10, left: 10),
+        decoration: const BoxDecoration(
+            color: ColorsX.whatsappGreen,
+            borderRadius: BorderRadius.all(Radius.circular(10))
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          child: globalWidgets.myText(context, 'Save', ColorsX.black,
+              0, 0, 0, 0, FontWeight.w700, 18),
+        ),
+      ),
+    );
+  }
+  customizeButton(BuildContext context){
+    return GestureDetector(
+      onTap: (){
+        Get.toNamed(Routes.CARD_TWO);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 10,top: 10, left: 10),
+        decoration: const BoxDecoration(
+            color: ColorsX.black,
+            borderRadius: BorderRadius.all(Radius.circular(10))
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          child: globalWidgets.myText(context, 'Customize', ColorsX.white,
+              0, 0, 0, 0, FontWeight.w700, 18),
+        ),
+      ),
+    );
+  }
+  editButton(BuildContext context){
+    return GestureDetector(
+      onTap: () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        debugPrint("${prefs.getString('id')}");
+        setState(() {
+          name = "${prefs.getString('name')}";
+          profession = "${prefs.getString('profession')}";
+          email = "${prefs.getString('email')}";
+          contact_number = "${prefs.getString('contact_number')}";
+          address = "${prefs.getString('address')}";
+          owner_name = "${prefs.getString('owner_name')}";
+          id = "${prefs.getString('id')}";
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 10,top: 10, left: 10),
+        decoration: const BoxDecoration(
+            color: ColorsX.whatsappGreen,
+            borderRadius: BorderRadius.all(Radius.circular(10))
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          child: globalWidgets.myText(context, 'Edit', ColorsX.black,
               0, 0, 0, 0, FontWeight.w700, 18),
         ),
       ),

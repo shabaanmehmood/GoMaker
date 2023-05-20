@@ -154,7 +154,9 @@ class LoginScreen extends StatelessWidget {
         title: 'Login Your Profile',
         desc:
         'How do you want to login?',// \n Save or remember ID to Log In' ,
-        btnCancelOnPress: (){},
+        btnCancelOnPress: (){
+          loginNow('Business', emailCtl.text, passwordCtl.text, context);
+        },
         btnCancelColor: ColorsX.red_danger,
         btnOkText: 'As Customer',
         buttonsTextStyle: TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
@@ -170,45 +172,90 @@ class LoginScreen extends StatelessWidget {
       ..show();
   }
   Future<String> loginNow(String loginAs ,String email, String password, BuildContext context) async {
-    // Get docs from collection reference
-    String response = '';
-    GlobalWidgets.hideKeyboard(context);
-    GlobalWidgets.showProgressLoader("Validating Data");
+    if(loginAs == 'Customer') {
+      // Get docs from collection reference
+      String response = '';
+      GlobalWidgets.hideKeyboard(context);
+      GlobalWidgets.showProgressLoader("Validating Data");
 
-    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .where('email', isEqualTo: email)
-        .where('password', isEqualTo: password)
-        .limit(1)
-        .get();
+      final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .where('password', isEqualTo: password)
+          .limit(1)
+          .get();
 
-    final List<DocumentSnapshot> documents = querySnapshot.docs;
-    GlobalWidgets.hideProgressLoader();
-    if(documents.isEmpty) {
-      errorDialog(context);
-    }
-    else {
-      print(documents.first);
-
-      String id = querySnapshot.docs[0].reference.id;
-      //parsing of data to save in shared preferences
-      for (var doc in querySnapshot.docs) {
-        // Getting data directly
-
-        String name = doc.get('name');
-        String city = doc.get('city');
-        String email = doc.get('email');
-        String password = doc.get('password');
-        String token = doc.get('token');
-        saveDataInLocal(id,name,city,email,password,token);
-        debugPrint(id);
-        // Getting data from map
-        // Map<String, dynamic> data = doc.data();
-        // int age = data['age'];
+      final List<DocumentSnapshot> documents = querySnapshot.docs;
+      GlobalWidgets.hideProgressLoader();
+      if (documents.isEmpty) {
+        errorDialog(context);
       }
-    }
+      else {
+        print(documents.first);
 
-    return response;
+        String id = querySnapshot.docs[0].reference.id;
+        //parsing of data to save in shared preferences
+        for (var doc in querySnapshot.docs) {
+          // Getting data directly
+
+          String name = doc.get('name');
+          String city = doc.get('city');
+          String email = doc.get('email');
+          String password = doc.get('password');
+          String token = doc.get('token');
+          saveDataInLocal(id, name, city, email, password, token);
+          debugPrint(id);
+          // Getting data from map
+          // Map<String, dynamic> data = doc.data();
+          // int age = data['age'];
+        }
+      }
+      return response;
+    }
+    else{
+      // Get docs from collection reference
+      String response = '';
+      GlobalWidgets.hideKeyboard(context);
+      GlobalWidgets.showProgressLoader("Validating Data");
+
+      final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('business')
+          .where('email', isEqualTo: email)
+          .where('password', isEqualTo: password)
+          .limit(1)
+          .get();
+
+      final List<DocumentSnapshot> documents = querySnapshot.docs;
+      GlobalWidgets.hideProgressLoader();
+      if (documents.isEmpty) {
+        errorDialog(context);
+      }
+      else {
+        print(documents.first);
+
+        String id = querySnapshot.docs[0].reference.id;
+        //parsing of data to save in shared preferences
+        for (var doc in querySnapshot.docs) {
+          // Getting data directly
+
+          String name = doc.get('name');
+          String ownerName = doc.get('owner_name');
+          String city = doc.get('city');
+          String email = doc.get('email');
+          String address = doc.get('address');
+          String token = doc.get('token');
+          String shortDescription = doc.get('short_description');
+          String profession = doc.get('profession');
+          String contact_number = doc.get('contact_number');
+          saveBusinessDataInLocal(id,ownerName, name, city, email, address, shortDescription, profession,contact_number,token);
+          debugPrint(id);
+          // Getting data from map
+          // Map<String, dynamic> data = doc.data();
+          // int age = data['age'];
+        }
+      }
+      return response;
+    }
   }
 
   loginButton(BuildContext context,){
@@ -449,30 +496,85 @@ class LoginScreen extends StatelessWidget {
     print(prefs.getString('token_from_login'));
     print(prefs.getString('token'));
     GlobalVariables.my_ID = id;
-    checkTokenAndUpdate(prefs.getString('token_from_login'),prefs.getString('token'));
+    checkTokenAndUpdate("Customer" ,prefs.getString('token_from_login'),prefs.getString('token'));
   }
 
-  checkTokenAndUpdate(String? loginToken, String? generatedToken) async {
-    if(generatedToken != null || generatedToken !='null'){
-      if(generatedToken == loginToken){
-        debugPrint('no need to update token');
-        Get.toNamed(Routes.CARD_ONE);
-      }else{
+  checkTokenAndUpdate(String updateAs ,String? loginToken, String? generatedToken) async {
+    if(updateAs == 'Customer') {
+      if (generatedToken != null || generatedToken != 'null') {
+        if (generatedToken == loginToken) {
+          debugPrint('no need to update token');
+          Get.toNamed(Routes.CARD_ONE);
+        } else {
+          GlobalWidgets.showProgressLoader("Please wait");
+          CollectionReference users = FirebaseFirestore.instance.collection(
+              'users');
+          await users
+              .doc(GlobalVariables.my_ID)
+              .update({'token': generatedToken})
+              .then((value) => debugPrint('token updated'))
+              .catchError((error) => debugPrint('token update error $error'));
 
-        GlobalWidgets.showProgressLoader("Please wait");
-        CollectionReference users =  FirebaseFirestore.instance.collection('users');
-        await users
-            .doc(GlobalVariables.my_ID)
-            .update({'token': generatedToken})
-            .then((value) => debugPrint('token updated'))
-            .catchError((error) => debugPrint('token update error $error'));
-
-        GlobalWidgets.hideProgressLoader();
+          GlobalWidgets.hideProgressLoader();
+          Get.toNamed(Routes.CARD_ONE);
+        }
+      } else {
         Get.toNamed(Routes.CARD_ONE);
       }
-    }else{
-      Get.toNamed(Routes.CARD_ONE);
+    }
+    else if(updateAs == 'Business'){
+      if (generatedToken != null || generatedToken != 'null') {
+        if (generatedToken == loginToken) {
+          debugPrint('no need to update token');
+          Get.toNamed(Routes.BUSINESS_MAIN_PAGE);
+        } else {
+          GlobalWidgets.showProgressLoader("Please wait");
+          CollectionReference users = FirebaseFirestore.instance.collection(
+              'business');
+          await users
+              .doc(GlobalVariables.my_ID)
+              .update({'token': generatedToken})
+              .then((value) => debugPrint('token updated'))
+              .catchError((error) => debugPrint('token update error $error'));
+
+          GlobalWidgets.hideProgressLoader();
+          Get.toNamed(Routes.BUSINESS_MAIN_PAGE);
+        }
+      } else {
+        Get.toNamed(Routes.BUSINESS_MAIN_PAGE);
+      }
+
     }
   }
+
+   saveBusinessDataInLocal(String id, String ownerName, String name, String city, String email,
+       String address, String shortDescription, String profession, String contact_number,String token) async {
+
+
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+     prefs.setString('id', "${id}");
+     prefs.setString('owner_name', "${ownerName}");
+     prefs.setString('name', "${name}");
+     prefs.setString('city', "${city}");
+     prefs.setString('email', "${email}");
+     prefs.setString('contact_number', "${contact_number}");
+     prefs.setString('address', "${address}");
+     prefs.setString('short_description', "${shortDescription}");
+     prefs.setString('profession', "${profession}");
+     prefs.setString('token_from_login', "${token}");
+
+     print(prefs.getString('id'));
+     print(prefs.getString('name'));
+     print(prefs.getString('owner_name'));
+     print(prefs.getString('city'));
+     print(prefs.getString('email'));
+     print(prefs.getString('address'));
+     print(prefs.getString('short_description'));
+     print(prefs.getString('profession'));
+     print(prefs.getString('token_from_login'));
+     print(prefs.getString('token'));
+     GlobalVariables.BUSINESS_ID = id;
+     checkTokenAndUpdate('Business',prefs.getString('token_from_login'),prefs.getString('token'));
+   }
 
 }

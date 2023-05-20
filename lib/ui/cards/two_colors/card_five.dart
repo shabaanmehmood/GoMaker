@@ -55,9 +55,17 @@ class _CardFiveState extends State<CardFive> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: Container(
-                    height: 110,
-                    width: 110,
-                    margin: EdgeInsets.only(top: SizeConfig.screenHeight * .07, right: 5),
+                    child: Image.asset('assets/images/person.png', fit: BoxFit.contain, height: 60,
+                      width: 60,),
+                    margin: EdgeInsets.only(top: 10, right: 5),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    height: 90,
+                    width: 90,
+                    margin: EdgeInsets.only(top: SizeConfig.screenHeight * .11, right: 5),
                     child: Image.asset('assets/images/qrcode.png',
                       fit: BoxFit.contain,),
                   ),

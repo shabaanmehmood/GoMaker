@@ -78,6 +78,7 @@ class GlobalVariables {
   static String payment_start_date = '';
   static String payment_end_date = '';
   static String my_ID = '';
+  static String BUSINESS_ID = '';
 
 
   static bool isCaste = false;
