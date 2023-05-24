@@ -53,6 +53,7 @@ class DrawerWidget extends StatelessWidget {
                 color: ColorsX.white,
               ),
               _createDrawerItem(Icons.edit, 'Edit My Card', context),
+              _createDrawerItem(Icons.dashboard_customize_outlined, 'Customize Card', context),
               Divider(
                 color: ColorsX.white,
               ),
@@ -221,16 +222,26 @@ class DrawerWidget extends StatelessWidget {
              if(text== "Logout"){
 
                SharedPreferences prefs = await SharedPreferences.getInstance();
-               prefs.setString('id', '');
-               prefs.setString('caste', '');
-               prefs.setString('subcaste', '');
-               prefs.setString('religion', '');
-               prefs.setString('sect', '');
-               prefs.setString('account_created_at', '');
-               prefs.setString('mother_tongue', '');
-               prefs.setString('phone', '');
-               prefs.setString('gender', '');
+               if(GlobalVariables.BUSINESS_ID != ''){
+                 prefs.setString('owner_name', '');
+                 prefs.setString('name', '');
+                 prefs.setString('city', '');
+                 prefs.setString('email', '');
+                 prefs.setString('contact_number', '');
+                 prefs.setString('address', '');
+                 prefs.setString('short_description', '');
+                 prefs.setString('profession', '');
+               }
+               if(GlobalVariables.my_ID!=''){
+                 prefs.setString('id', '');
+                 prefs.setString('name','');
+                 prefs.setString('city','');
+                 prefs.setString('email','');
+                 prefs.setString('password','');
+               }
                Get.back();
+               GlobalVariables.my_ID = '';
+               GlobalVariables.BUSINESS_ID = '';
                Get.toNamed(Routes.LOGIN_SCREEN);
              }
            },

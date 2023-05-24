@@ -120,7 +120,9 @@ class LoginScreen extends StatelessWidget {
         title: 'Register Your Profile',
         desc:
         'How do you want to register?',// \n Save or remember ID to Log In' ,
-        btnCancelOnPress: (){},
+        btnCancelOnPress: (){
+          Get.toNamed(Routes.REGISTER_BUSINESS_SCREEN);
+        },
         btnCancelColor: ColorsX.red_danger,
         btnOkText: 'As Customer',
         buttonsTextStyle: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
@@ -496,6 +498,7 @@ class LoginScreen extends StatelessWidget {
     print(prefs.getString('token_from_login'));
     print(prefs.getString('token'));
     GlobalVariables.my_ID = id;
+    GlobalVariables.BUSINESS_ID = '';
     checkTokenAndUpdate("Customer" ,prefs.getString('token_from_login'),prefs.getString('token'));
   }
 
@@ -532,7 +535,7 @@ class LoginScreen extends StatelessWidget {
           CollectionReference users = FirebaseFirestore.instance.collection(
               'business');
           await users
-              .doc(GlobalVariables.my_ID)
+              .doc(GlobalVariables.BUSINESS_ID)
               .update({'token': generatedToken})
               .then((value) => debugPrint('token updated'))
               .catchError((error) => debugPrint('token update error $error'));
@@ -574,6 +577,7 @@ class LoginScreen extends StatelessWidget {
      print(prefs.getString('token_from_login'));
      print(prefs.getString('token'));
      GlobalVariables.BUSINESS_ID = id;
+     GlobalVariables.my_ID = '';
      checkTokenAndUpdate('Business',prefs.getString('token_from_login'),prefs.getString('token'));
    }
 

@@ -30,7 +30,7 @@ class _BusinessMainPageState extends State<BusinessMainPage> {
         appBar: AppBar(
           backgroundColor: ColorsX.black,
           centerTitle: true,
-          title: globalWidgets.myText(context, "Proposals", ColorsX.white, 0, 0,0,0, FontWeight.w400, 16),
+          title: globalWidgets.myText(context, "Profile", ColorsX.white, 0, 0,0,0, FontWeight.w400, 16),
           leading: IconButton(
             icon: Icon(Icons.menu_rounded, color: ColorsX.white,),
             onPressed: () => _scaffoldKey.currentState?.openDrawer(), //Scaffold.of(context).openDrawer(),
@@ -51,6 +51,11 @@ class _BusinessMainPageState extends State<BusinessMainPage> {
             decoration: BoxDecoration(
               // color:  const Color(0xff70b4ff).withOpacity(0.8),
               color: Color(0xfff0f0f0),
+            ),
+            child: Center(
+              child:
+              globalWidgets.myText(context, 'You have no saved cards yet', ColorsX.black, 0, 0, 0, 0,
+                  FontWeight.w700, 16),
             ),
           ),
           // listViewContent(context),

@@ -169,13 +169,16 @@ class _CardThreeState extends State<CardThree> {
                 nextButton(context),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                saveButton(context),
-                customizeButton(context),
-                editButton(context)
-              ],
+            Visibility(
+              visible: GlobalVariables.BUSINESS_ID != '' && GlobalVariables.my_ID == '',
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  saveButton(context),
+                  customizeButton(context),
+                  editButton(context)
+                ],
+              ),
             ),
           ],
         ),
